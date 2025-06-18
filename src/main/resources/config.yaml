@@ -1,0 +1,12 @@
+default: "dev"
+
+environments:
+  dev:
+    base_url: "https://api.trello.com/1"
+    timeout: 5000
+    headers:
+      Content-Type: "application/json"
+      Accept: "application/json"
+    queryParams:
+      key: ""
+      token: ""
