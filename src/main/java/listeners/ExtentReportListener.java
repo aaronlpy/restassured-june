@@ -5,20 +5,27 @@ import com.aventstack.extentreports.ExtentTest;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import utils.ExtentManager;
 
 public class ExtentReportListener implements ITestListener {
 
-    private static ExtentReports extent;
-    private static ThreadLocal<ExtentTest> test;
+    private static final ExtentReports extent = ExtentManager.getInstance();
+    private static final ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+
+    public static ExtentTest getTest() {
+        return test.get();
+    }
+
 
     @Override
     public void onTestStart(ITestResult result) {
-        ITestListener.super.onTestStart(result);
+        ExtentTest extentTest = extent.createTest(result.getMethod().getDescription());
+        test.set(extentTest);
     }
 
     @Override
-    public void onTestSuccess(ITestResult result) {
-        ITestListener.super.onTestSuccess(result);
+    public void onTestSuccess(ITestResult result){
+        getTest().pass(result.getMethod().getDescription() + " passed");
     }
 
     @Override
@@ -48,6 +55,6 @@ public class ExtentReportListener implements ITestListener {
 
     @Override
     public void onFinish(ITestContext context) {
-        ITestListener.super.onFinish(context);
+        extent.flush();
     }
 }

@@ -1,9 +1,14 @@
 package api;
 
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.CodeLanguage;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import listeners.ExtentReportListener;
 import models.HttpMethod;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import service.RestClient;
@@ -23,6 +28,7 @@ public class BaseRequest {
     public void setUpTest(){
         test = RestAssured.given().spec(this.client.getRequest());
     }
+
 
     public Response sendRequest(HttpMethod httpMethod, String resourcePath, String payload) throws Exception {
         try{

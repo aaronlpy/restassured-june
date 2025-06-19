@@ -16,7 +16,7 @@ public class JSONDataLoader {
         ObjectMapper mapper = new ObjectMapper();
         File f = new File("src/main/resources/data.json");
 
-        var list = mapper.readValue(f, List.class);
+        List<Object> list = mapper.readValue(f, List.class);
         return list.stream()
                 .map(entry -> new Object[]{entry})
                 .iterator();
